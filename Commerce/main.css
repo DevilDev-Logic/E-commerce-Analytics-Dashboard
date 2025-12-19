@@ -1,0 +1,181 @@
+/* Custom Styles for 3D and Cursor Effect */
+:root {
+    --primary-color: #f97316;
+    --bg-color: #0c0a09;
+    --card-color: #1a1a1a;
+    --text-color: #F8FAFC;
+    --accent-color: #f97316;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    /* Restore default cursor for touch devices, custom for mouse */
+    cursor: auto; 
+}
+
+/* Only show custom cursor on devices that support hover (Mouse) */
+@media (hover: hover) and (pointer: fine) {
+    body {
+        cursor: none;
+    }
+    .cursor-dot, .cursor-circle {
+        display: block;
+    }
+}
+
+/* Custom Cursor Trail Style */
+.cursor-dot, .cursor-circle {
+    position: fixed;
+    top: 0;
+    left: 0;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease-out;
+}
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background-color: var(--accent-color);
+    opacity: 0.9;
+    transform: translate(-50%, -50%);
+}
+
+.cursor-circle {
+    width: 40px;
+    height: 40px;
+    border: 2px solid var(--primary-color);
+    opacity: 0.4;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: soft-light;
+    transition: width 0.3s ease, height 0.3s ease, opacity 0.3s ease;
+}
+
+/* Hover effect */
+button:hover ~ .cursor-circle, .card:hover ~ .cursor-circle, nav a:hover ~ .cursor-circle, .profile-dropdown-btn:hover ~ .cursor-circle {
+    width: 60px;
+    height: 60px;
+    opacity: 0.8;
+}
+
+/* 3D Card Tilt Effect */
+.card-container {
+    perspective: 1000px;
+}
+
+.card {
+    background-color: var(--card-color);
+    transition: transform 0.5s ease-out;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(2px);
+}
+
+/* Working button style */
+.working-button {
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px var(--accent-color);
+    position: relative;
+    overflow: hidden;
+    background-color: var(--accent-color);
+}
+.working-button:hover {
+     background-color: #ea580c;
+}
+.working-button:active {
+    transform: scale(0.98);
+}
+
+.loading {
+    animation: pulse 1s infinite;
+}
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+/* Sparkline Placeholder */
+.sparkline-placeholder {
+    height: 40px;
+    width: 100%;
+    background: linear-gradient(90deg, #15803d 0%, #15803d 30%, #4ade80 50%, #15803d 70%, #15803d 100%);
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0 18 L10 5 L20 15 L30 10 L40 18 L50 2 L60 12 L70 8 L80 16 L90 4 L100 14 V20 H0 Z' fill='%23fff' /%3E%3C/svg%3E") no-repeat;
+    mask-size: 100% 100%;
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 20'%3E%3Cpath d='M0 18 L10 5 L20 15 L30 10 L40 18 L50 2 L60 12 L70 8 L80 16 L90 4 L100 14 V20 H0 Z' fill='%23fff' /%3E%3C/svg%3E") no-repeat;
+    -webkit-mask-size: 100% 100%;
+    opacity: 0.7;
+}
+
+/* D3 Chart Specific Styles */
+.arc text {
+    font-size: 10px;
+    fill: white;
+    pointer-events: none;
+}
+.arc path {
+    transition: opacity 0.2s ease;
+}
+
+/* Dropdown transition states */
+.dropdown-hidden {
+    opacity: 0;
+    transform: scale(0.95);
+    visibility: hidden;
+    transition: opacity 0.15s ease-out, transform 0.15s ease-out, visibility 0.15s;
+}
+.dropdown-visible {
+    opacity: 1;
+    transform: scale(1);
+    visibility: visible;
+    transition: opacity 0.15s ease-in, transform 0.15s ease-in, visibility 0.15s;
+}
+
+/* Modal specific styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(5px);
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+.modal-content {
+    background-color: var(--card-color);
+    padding: 25px;
+    border-radius: 16px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.9);
+    transform: scale(0.9);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    max-width: 400px;
+    width: 90%;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.modal-visible .modal-overlay {
+    opacity: 1;
+}
+.modal-visible .modal-content {
+    transform: scale(1);
+}
+
+/* Responsive Utilities */
+@media (max-width: 768px) {
+    .card {
+        margin-bottom: 1rem;
+    }
+    h1 {
+        font-size: 1.5rem;
+    }
+}
